@@ -1,0 +1,23 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.metrics import classification_report
+
+# Load dataset
+data = pd.read_csv("loan_data.csv")
+X = data.drop('Loan_Status', axis=1)
+y = data['Loan_Status']
+
+# Preprocessing
+X = pd.get_dummies(X)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Train model
+model = GradientBoostingClassifier()
+model.fit(X_train, y_train)
+
+# Evaluate
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))
