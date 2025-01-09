@@ -1,0 +1,16 @@
+import pandas as pd
+from sklearn.ensemble import IsolationForest
+from sklearn.metrics import classification_report
+
+# Load dataset
+data = pd.read_csv("fraud_data.csv")
+X = data.drop('is_fraud', axis=1)
+y = data['is_fraud']
+
+# Train model
+model = IsolationForest()
+model.fit(X)
+
+# Predict
+y_pred = model.predict(X)
+print(classification_report(y, y_pred))
